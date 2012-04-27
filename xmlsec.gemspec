@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.email       = ["tomas.did@gmail.com"]
   s.homepage    = "https://github.com/friendlyfashion/xmlsec"
   s.extensions  = ["ext/xmlsec/extconf.rb"]
-  s.summary     = "summary"
-  s.description = 'description'
+  s.summary     = "Ruby bindings for xmlsec"
+  s.description = 'Ruby bindings for xmlsec'
 
   # s.rubyforge_project = "xmlsec"
 

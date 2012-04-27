@@ -1,4 +1,4 @@
 xmlsec
 ======
 
-xmlsec
+Ruby bindings for xmlsec
