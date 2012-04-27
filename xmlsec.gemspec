@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = XmlSec::VERSION
   s.authors     = ["Tomas Didziokas"]
   s.email       = ["tomas.did@gmail.com"]
-  s.homepage    = "http://manodrabuziai.lt/"
+  s.homepage    = "https://github.com/friendlyfashion/xmlsec"
   s.extensions  = ["ext/xmlsec/extconf.rb"]
   s.summary     = "summary"
   s.description = 'description'
