@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     XML Security Library test file
+-->
+<Service version="2.0">
+  <Data>
+   <str>	Hello, World! The euro sign (ą) </str>
+   <smfing>
+    <!-- XML Security Library test file -->
+    <test1 somettr="VALUE"/>
+    <TEST2 SOMETTR="VALUE"/>
+   </smfing>
+  </Data>
+<Security><Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#WithComments"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference>
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>cWRQ7e5Hp3G/m+AsreGhIefcB0A=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>lxGeNKU+RS7T8DsAT+ZlPxO/e0OLiq1tIUiZ1LWYLB3RxACvnre15pNniRCjXRrZ
+He6Kr+0xrqhfQLVPqHi0Gj7z8Ac0sTdICCCxJTzq1YQ2PhSRgXT8TGeXzVI4VIMp
+D0ypoBWhtOLvwaCpiX4mHZ3NjpqbrdNcxVGnoGh5Dm0=</SignatureValue>
+<KeyInfo>
+<X509Data>
+<X509Certificate>MIIB+zCCAWQCCQCNDSfdaw1XODANBgkqhkiG9w0BAQUFADBCMQswCQYDVQQGEwJY
+WDEVMBMGA1UEBwwMRGVmYXVsdCBDaXR5MRwwGgYDVQQKDBNEZWZhdWx0IENvbXBh
+bnkgTHRkMB4XDTEyMDMxMjE0MjExNVoXDTEzMDMxMjE0MjExNVowQjELMAkGA1UE
+BhMCWFgxFTATBgNVBAcMDERlZmF1bHQgQ2l0eTEcMBoGA1UECgwTRGVmYXVsdCBD
+b21wYW55IEx0ZDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAzAkX2JwvyH6h
+UtXt9g7HAz/GQPe/nexZjGwVOfZtcLVR24wzSqMKUm+t+hsDrngZor7mYbkzrFwW
+JZKuMzTdOBFMdJABXQ26ik4X5G3oQvLCvvfxqGoci4BnOa2TnxvpRw7g1jekjGxn
+393bFgOXJIi0gsjx+hcr20qLdaEnJycCAwEAATANBgkqhkiG9w0BAQUFAAOBgQBA
+8qZt/THE1SmLZ/55yTh3rxgcfdlJzk+iE9VYd9aseGHSbZmOEDjmtF6hNJBYw/BI
+oxAOVnMI6cuAbNe5ydub5YeelyJGrlPEcIs+lm2GkUCRFZd4krVO4r2wptD0KP8a
+5iD8CBI9Bl39pXP7k6pEM1UVPUfxyT/h7I2dpqxp+Q==</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></Security></Service>

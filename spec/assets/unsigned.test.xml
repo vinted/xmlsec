@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     XML Security Library test file
+-->
+<Service version="2.0">
+  <Data>
+   <str>	Hello, World! The euro sign (ą) </str>
+   <smfing>
+    <!-- XML Security Library test file -->
+    <test1 somettr="VALUE"/>
+    <TEST2 SOMETTR="VALUE"/>
+   </smfing>
+  </Data>
+</Service>
