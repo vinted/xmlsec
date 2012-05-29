@@ -178,7 +178,7 @@ static VALUE rb_xmlsec_is_valid_file(VALUE self, VALUE template_file, VALUE key_
 
   if ((doc == NULL) || (xmlDocGetRootElement(doc) == NULL)) {
     rb_raise(rb_eRuntimeError, "Error: unable to parse  template file.");
-    return;
+    return Qnil;
   }
   if (! NIL_P(x509_file)) return xmlsec_is_valid_by_x509_file(self, doc, x509_file );
   if (! NIL_P(key_file)) return xmlsec_is_valid_by_key(self, doc, key_file);
@@ -196,7 +196,7 @@ static VALUE rb_xmlsec_is_valid(VALUE self, VALUE template, VALUE key_file, VALU
     );
   if ((doc == NULL) || (xmlDocGetRootElement(doc) == NULL)){
     rb_raise(rb_eRuntimeError, "Error: unable to parse  template.");
-    return;
+    return Qnil;
   }
   if (! NIL_P(x509_file)) return xmlsec_is_valid_by_x509_file(self, doc, x509_file );
   if (! NIL_P(key_file)) return xmlsec_is_valid_by_key(self, doc, key_file);

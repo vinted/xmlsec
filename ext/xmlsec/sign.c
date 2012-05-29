@@ -143,7 +143,7 @@ static VALUE rb_xmlsec_sign_file(VALUE self, VALUE template_file, VALUE key_file
 
   if ((doc == NULL) || (xmlDocGetRootElement(doc) == NULL)) {
     rb_raise(rb_eRuntimeError, "Error: unable to parse  template file.");
-    return;
+    return Qnil;
   }
 
   return xmlsec_sign(self, doc, key_file, password, x509_file, node_name );
@@ -160,7 +160,7 @@ static VALUE rb_xmlsec_sign(VALUE self, VALUE template, VALUE key_file, VALUE pa
     );
   if ((doc == NULL) || (xmlDocGetRootElement(doc) == NULL)){
     rb_raise(rb_eRuntimeError, "Error: unable to parse  template.");
-    return;
+    return Qnil;
   }
   return xmlsec_sign(self, doc, key_file, password, x509_file,node_name );
 }
