@@ -5,8 +5,8 @@ require "xmlsec/version"
 Gem::Specification.new do |s|
   s.name        = "xmlsec"
   s.version     = XmlSec::VERSION
-  s.authors     = ["Tomas Didziokas"]
-  s.email       = ["tomas.did@gmail.com"]
+  s.authors     = ["Tomas Didziokas", "Justas Janauskas", "Edvinas Bartkus", "Laurynas Butkus"]
+  s.email       = ["tomas.did@gmail.com", "jjanauskas@gmail.com", "edvinas.bartkus@gmail.com", "laurynas.butkus@gmail.com"]
   s.homepage    = "https://github.com/friendlyfashion/xmlsec"
   s.extensions  = ["ext/xmlsec/extconf.rb"]
   s.summary     = "Ruby bindings for xmlsec"
