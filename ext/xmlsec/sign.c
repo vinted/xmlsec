@@ -19,7 +19,7 @@ static VALUE xmlsec_sign(VALUE self, xmlDocPtr doc, VALUE key_file, VALUE passwo
 
   /* create signature template for RSA-SHA1 enveloped signature */
   signNode = xmlSecTmplSignatureCreate( doc,
-                                        xmlSecTransformExclC14NWithCommentsId,
+                                        xmlSecTransformInclC14NWithCommentsId,
                                         xmlSecTransformRsaSha1Id,
                                        NULL
                                       );
@@ -46,7 +46,7 @@ static VALUE xmlsec_sign(VALUE self, xmlDocPtr doc, VALUE key_file, VALUE passwo
   refNode = xmlSecTmplSignatureAddReference(signNode,
                                             xmlSecTransformSha1Id,
                                             NULL,
-                                            NULL,
+                                            "\0",
                                             NULL);
   if(refNode == NULL) {
     if(doc != NULL) xmlFreeDoc(doc);
@@ -74,6 +74,11 @@ static VALUE xmlsec_sign(VALUE self, xmlDocPtr doc, VALUE key_file, VALUE passwo
     if(xmlSecTmplKeyInfoAddX509Data(keyInfoNode) == NULL) {
       if(doc != NULL) xmlFreeDoc(doc);
       rb_raise(rb_eRuntimeError, "Error: failed to add X509Data node\n");
+      return Qnil;
+    }
+    if(xmlSecTmplKeyInfoAddKeyValue(keyInfoNode) == NULL) {
+      if(doc != NULL) xmlFreeDoc(doc);
+      rb_raise(rb_eRuntimeError, "Error: failed to add KeyValue node\n");
       return Qnil;
     }
   }
@@ -162,7 +167,7 @@ static VALUE rb_xmlsec_sign(VALUE self, VALUE template, VALUE key_file, VALUE pa
     rb_raise(rb_eRuntimeError, "Error: unable to parse  template.");
     return Qnil;
   }
-  return xmlsec_sign(self, doc, key_file, password, x509_file,node_name );
+  return xmlsec_sign(self, doc, key_file, password, x509_file, node_name );
 }
 
 

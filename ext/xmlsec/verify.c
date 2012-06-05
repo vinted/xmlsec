@@ -6,8 +6,10 @@ extern VALUE mXmlSec, cXmlSecError;
 
 VALUE xmlsec_is_valid_by_x509_file(VALUE self, xmlDocPtr doc, VALUE x509_file ) {
   xmlSecKeysMngrPtr mngr;
+  VALUE v;
   xmlNodePtr node = NULL;
   xmlSecDSigCtxPtr dsigCtx = NULL;
+  long i;
 
   mngr = xmlSecKeysMngrCreate();
 
@@ -23,14 +25,31 @@ VALUE xmlsec_is_valid_by_x509_file(VALUE self, xmlDocPtr doc, VALUE x509_file ) 
     rb_raise(rb_eRuntimeError, "Error: failed to initialize keys manager.\n");
     return Qnil;
   }
-
-  /* load trusted cert */
-  if(xmlSecCryptoAppKeysMngrCertLoad(mngr, StringValuePtr(x509_file), xmlSecKeyDataFormatPem, xmlSecKeyDataTypeTrusted) < 0) {
-    if(doc != NULL) xmlFreeDoc(doc);
-    if(mngr != NULL) xmlSecKeysMngrDestroy(mngr);
-    rb_raise(rb_eRuntimeError, "Error: failed to load pem certificate from \"%s\"\n", StringValuePtr(x509_file));
-    return Qnil;
+  if (TYPE(x509_file) == T_STRING){
+    /* load trusted cert */
+    if(xmlSecCryptoAppKeysMngrCertLoad(mngr, StringValuePtr(x509_file), xmlSecKeyDataFormatPem, xmlSecKeyDataTypeTrusted) < 0) {
+      if(doc != NULL) xmlFreeDoc(doc);
+      if(mngr != NULL) xmlSecKeysMngrDestroy(mngr);
+      rb_raise(rb_eRuntimeError, "Error: failed to load pem certificate from \"%s\"\n", StringValuePtr(x509_file));
+      return Qnil;
+    }
   }
+  if (TYPE(x509_file) == T_ARRAY) {
+    for (i =0; i < RARRAY_LEN(x509_file); i++) {
+      v = rb_ary_entry(x509_file, i);
+      StringValue(v);
+      if(xmlSecCryptoAppKeysMngrCertLoad(mngr, RSTRING_PTR(v), xmlSecKeyDataFormatPem, xmlSecKeyDataTypeTrusted) < 0) {
+          if(doc != NULL) xmlFreeDoc(doc);
+          if(mngr != NULL) xmlSecKeysMngrDestroy(mngr);
+          rb_raise(rb_eRuntimeError, "Error: failed to load pem certificate from \"%s\"\n", RSTRING_PTR(v));
+          return Qnil;
+      }
+
+    }
+    //rb_ary_entry
+
+  }
+
 
   /* find start node */
   node = xmlSecFindNode(xmlDocGetRootElement(doc), xmlSecNodeSignature, xmlSecDSigNs);
@@ -48,6 +67,9 @@ VALUE xmlsec_is_valid_by_x509_file(VALUE self, xmlDocPtr doc, VALUE x509_file ) 
     rb_raise(rb_eRuntimeError, "Error: failed to create signature context\n");
     return Qnil;
   }
+
+    /* limit the Reference URI attributes to empty or NULL */
+  dsigCtx->enabledReferenceUris = xmlSecTransformUriTypeEmpty;
 
   /* Verify signature */
   if(xmlSecDSigCtxVerify(dsigCtx, node) < 0) {
@@ -92,6 +114,7 @@ VALUE xmlsec_is_valid(VALUE self, xmlDocPtr doc) {
     rb_raise(rb_eRuntimeError, "Error: failed to create signature context\n");
     return Qnil;
   }
+  dsigCtx->enabledReferenceUris = xmlSecTransformUriTypeEmpty;
 
   /* Verify signature */
   if(xmlSecDSigCtxVerify(dsigCtx, node) < 0) {
@@ -133,6 +156,7 @@ VALUE xmlsec_is_valid_by_key(VALUE self, xmlDocPtr doc, VALUE key_file ) {
     rb_raise(rb_eRuntimeError, "Error: failed to create signature context\n");
     return Qnil;
   }
+  dsigCtx->enabledReferenceUris = xmlSecTransformUriTypeEmpty;
 
   /* load public key */
   dsigCtx->signKey = xmlSecCryptoAppKeyLoad(StringValuePtr(key_file), xmlSecKeyDataFormatPem, NULL, NULL, NULL);
@@ -177,7 +201,7 @@ static VALUE rb_xmlsec_is_valid_file(VALUE self, VALUE template_file, VALUE key_
   doc = xmlParseFile(StringValuePtr(template_file));
 
   if ((doc == NULL) || (xmlDocGetRootElement(doc) == NULL)) {
-    rb_raise(rb_eRuntimeError, "Error: unable to parse  template file.");
+    rb_raise(rb_eRuntimeError, "Error: unable to parse template file.");
     return Qnil;
   }
   if (! NIL_P(x509_file)) return xmlsec_is_valid_by_x509_file(self, doc, x509_file );
@@ -187,6 +211,11 @@ static VALUE rb_xmlsec_is_valid_file(VALUE self, VALUE template_file, VALUE key_
 
 static VALUE rb_xmlsec_is_valid(VALUE self, VALUE template, VALUE key_file, VALUE x509_file ) {
   xmlDocPtr doc;
+
+  if (TYPE(template) != T_STRING){
+    rb_raise(rb_eRuntimeError, "Error: Wrong template type");
+  }
+
   doc = xmlReadMemory(
       StringValuePtr(template),
       RSTRING_LEN(template),
@@ -194,13 +223,16 @@ static VALUE rb_xmlsec_is_valid(VALUE self, VALUE template, VALUE key_file, VALU
       NULL,
       0
     );
+
   if ((doc == NULL) || (xmlDocGetRootElement(doc) == NULL)){
-    rb_raise(rb_eRuntimeError, "Error: unable to parse  template.");
+    rb_raise(rb_eRuntimeError, "Error: unable to parse template %s.", StringValuePtr(template));
+
+    rb_raise(rb_eRuntimeError, "Error: unable to parse template.");
     return Qnil;
   }
   if (! NIL_P(x509_file)) return xmlsec_is_valid_by_x509_file(self, doc, x509_file );
   if (! NIL_P(key_file)) return xmlsec_is_valid_by_key(self, doc, key_file);
-  return xmlsec_is_valid(self, doc);
+  //return xmlsec_is_valid(self, doc);
 }
 
 
