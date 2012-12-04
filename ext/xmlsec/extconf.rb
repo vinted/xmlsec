@@ -15,13 +15,13 @@ if (xc = with_config('xmlsec1-config')) or RUBY_PLATFORM.match(/darwin/i) then
     end
   end
 else
-  dir_config('xmlsec1')
+  pkg_config('xmlsec1')
 end
 
 unless (have_library('xmlsec1', 'xmlSecDSigCtxCreate') or
     find_library('xmlsec1', 'xmlSecDSigCtxCreate', '/opt/lib', '/usr/local/lib', '/usr/lib')) and
     (have_header('xmlsec/version.h') or
-        find_header('xmlsec/xmlversion.h',
+        find_header('xmlsec/version.h',
                     '/opt/include/xmlsec1',
                     '/usr/local/include/xmlsec1',
                     '/usr/include/xmlsec1'))
