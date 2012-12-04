@@ -1,5 +1,0 @@
-package configuration for xmlsec1-openssl
-cflags: -DXMLSEC_CRYPTO=\"openssl\" -D__XMLSEC_FUNCTION__=__FUNCTION__ -DXMLSEC_NO_GOST=1 -DXMLSEC_NO_XKMS=1 -DXMLSEC_DL_LIBLTDL=1, -DXMLSEC_OPENSSL_098=1 -DXMLSEC_CRYPTO_OPENSSL=1 -I/usr/include/xmlsec1 -I/usr/include/libxml2  
-ldflags: 
-libs: -lxmlsec1-openssl -lxmlsec1 -lltdl -lssl -lcrypto -ldl -lxslt -lz -lm -lxml2  
-
