@@ -1,5 +1,10 @@
 require 'mkmf'
 
+def crash(str)
+  printf(" extconf failure: %s\n", str)
+  exit 1
+end
+
 if (xc = with_config('xmlsec1-config')) or RUBY_PLATFORM.match(/darwin/i) then
   xc = 'xmlsec1-config' if xc == true or xc.nil?
   cflags = `#{xc} --cflags`.chomp
