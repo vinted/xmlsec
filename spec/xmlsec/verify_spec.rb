@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe XmlSec do
-
   it "should verify signed.test.xml with public key" do
     asset_dir = File.expand_path('../../assets', __FILE__)
     XmlSec::valid_file?(
@@ -9,7 +8,6 @@ describe XmlSec do
         File.join(asset_dir, 'public.key.pem'),
         nil
       ).should be_true
-
   end
 
   it "should verify signed.test.xml certificate" do
@@ -19,7 +17,6 @@ describe XmlSec do
         nil,
         File.join(asset_dir, 'x509.crt')
       ).should be_true
-
   end
 
 
@@ -30,7 +27,6 @@ describe XmlSec do
         File.join(asset_dir, 'public.key.pem'),
         nil
       ).should be_true
-
   end
 
   it "should verify xml string certificate" do
@@ -40,7 +36,5 @@ describe XmlSec do
         nil,
         File.join(asset_dir, 'x509.crt')
       ).should be_true
-
   end
-
 end

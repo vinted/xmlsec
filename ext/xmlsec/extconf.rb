@@ -20,7 +20,7 @@ if (xc = with_config('xmlsec1-config')) or RUBY_PLATFORM.match(/darwin/i) then
     end
   end
 else
-  pkg_config('xmlsec1')
+  pkg_config('xmlsec1-openssl') || pkg_config('xmlsec1')
 end
 
 unless (have_library('xmlsec1', 'xmlSecDSigCtxCreate') or

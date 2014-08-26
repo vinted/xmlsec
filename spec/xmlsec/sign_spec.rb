@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe XmlSec do
-
   it "should sign unsigned.test.xml with unprotected private key" do
     asset_dir = File.expand_path('../../assets', __FILE__)
     xml = XmlSec::sign_file(
@@ -315,6 +314,4 @@ describe XmlSec do
         "xmlns" => "http://www.w3.org/2000/09/xmldsig#"
       ).count.should eql(1)
   end
-
-
 end
