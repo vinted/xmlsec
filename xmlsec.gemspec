@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake-compiler', "~> 0.7.7"
   s.add_development_dependency 'rake', '0.8.7' # NB: 0.8.7 required by rake-compiler 0.7.9
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'nokogiri', '1.5.0'
+  s.add_development_dependency 'nokogiri'
 
 end
 
